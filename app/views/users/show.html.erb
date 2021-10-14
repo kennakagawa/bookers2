@@ -7,7 +7,7 @@
 <div class="container px-5 px-sm-0">
   <div class="row">
     <%= render 'books/list', book: @book, user: @user %>
-    
+
 
     <div class="col-md-8 offset-md-1">
       <h2>Books</h2>
@@ -37,6 +37,26 @@
 
             <td>
               <%= book.body %>
+            </td>
+            
+            
+              
+            <% if book.favorited_by?(current_user) %>
+            <td>
+              <%= link_to book_favorites_path(book), class: "fas fa-heart", method: :delete, :style=>"color:red;" do %>
+                <i style="color:red;"></i><%= book.favorites.count %>
+              <% end %>
+            </td>
+            <% else %>
+            <td>
+              <%= link_to book_favorites_path(book), class: "fas fa-heart", method: :post do %>
+                <%= book.favorites.count %>
+              <% end %>
+            </td>
+            <% end %>
+            
+            <td>
+              コメント件数:<%= book.book_comments.count %>
             </td>
           </tr>
         </tbody>
